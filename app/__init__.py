@@ -4,7 +4,7 @@ from app.main import main
 
 def create_app(config_class=Config):
     """
-    Creates an instance of the flask application according to a specified configuration. 
+    Creates an instance of the flask application according to a specified configuration class. 
     """
     app = Flask(__name__)
     app.config.from_object(config_class) 

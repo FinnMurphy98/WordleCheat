@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>WordleTips</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+        <link rel="stylesheet" href="style.css">
+        <script>
+            let allWords;
+            let blackHints = [];
+            let yellowHints = [];
+            let greenHints = [];
+            fetch('words.txt')
+                .then(response => response.text())
+                .then(data => {
+                    allWords = data.split('\n');
+                })
+                .catch(error => {
+                    console.error('Error reading file:', error);
+                    allWords = [];
+                });
+        </script>
+    </head>
+    <body>
+        <h1>WordleCheat</h1>
+        <h2 id="hints-header">Enter your grey hints:</h2>
+        <div id="hints">
+            <div class="keyboard">
+                <div class="keyboard-row" id="row1">
+                    <button class="key">Q</button>
+                    <button class="key">W</button>
+                    <button class="key">E</button>
+                    <button class="key">R</button>
+                    <button class="key">T</button>
+                    <button class="key">Y</button>
+                    <button class="key">U</button>
+                    <button class="key">I</button>
+                    <button class="key">O</button>
+                    <button class="key">P</button>
+                </div>
+                <div class="keyboard-row" id="row2">
+                    <button class="key">A</button>
+                    <button class="key">S</button>
+                    <button class="key">D</button>
+                    <button class="key">F</button>
+                    <button class="key">G</button>
+                    <button class="key">H</button>
+                    <button class="key">J</button>
+                    <button class="key">K</button>
+                    <button class="key">L</button>
+                </div>
+                <div class="keyboard-row" id="row3">
+                    <button class="key">Z</button>
+                    <button class="key">X</button>
+                    <button class="key">C</button>
+                    <button class="key">V</button>
+                    <button class="key">B</button>
+                    <button class="key">N</button>
+                    <button class="key">M</button>
+                </div>
+            </div>
+            <div class="restart-submit">
+                <button id="restart">Restart</button>
+                <button id="submit">Submit</button>
+            </div>
+        </div>
+        <div id="results">
+
+        </div>
+    </body>
+</html>
