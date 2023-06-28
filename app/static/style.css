@@ -6,14 +6,35 @@ body {
 h1 {
     text-align: center;
     font-size: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 h2 {
     text-align: center;
+    font-size: 1.25em;
 }
 
 .bold {
     font-weight: bold;
+}
+
+.grid {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid-box {
+    height: 40px;
+    width: 40px;
+    background-color: #161515;
+    color: #161515;
+    border: 1px solid white;
+    border-radius: 2px;
+    margin-top: 1.5px;
+    margin-bottom: 1.5px;
 }
 
 .keyboard {
@@ -30,17 +51,79 @@ h2 {
 .keyboard-row > button {
     font-size: 1em;
     height: 40px;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 2px;
 }
 
-.restart-submit {
+#feedback {
+    display: none;
+    margin: 20px;
+}
+
+.feedback > button {
     height: 40px;
     width: auto;
-    margin: 20px;
-    display: flex;
-    justify-content: center;
+    margin: 3px;
+    font-size: 1em;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 2px;
 }
 
-.restart-submit > button {
+#grey-button {
+    background-color: dimgrey;
+    color: white;
+}
+
+#yellow-button {
+    background-color: goldenrod;
+}
+
+#green-button {
+    background-color: seagreen;
+    color: white;
+}
+
+.restart-enter {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+#add-more {
+    display: none;
+}
+
+.restart-enter > button {
+    height: 40px;
+    width: auto;
     font-size: 1em;
     margin: 3px;
+    cursor: pointer;
+}
+
+#results {
+    display: none;
+}
+
+#results-div{
+    width: 200px;
+    height: 400px;
+    overflow-y: scroll;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid dimgrey;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+#results-div::-webkit-scrollbar {
+    width: 10px;
+    height: 5px;
+}
+
+#results-div::-webkit-scrollbar-thumb {
+    background-color: whitesmoke;
+    border-radius: 5px;
 }

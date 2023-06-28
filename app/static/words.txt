@@ -1054,6 +1054,7 @@ juror
 kappa
 karma
 kayak
+kazoo
 kebab
 khaki
 kinky
@@ -1226,7 +1227,7 @@ missy
 mocha
 modal
 model
-modern
+modem
 mogul
 moist
 molar

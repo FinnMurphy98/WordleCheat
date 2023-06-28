@@ -2,18 +2,26 @@
 
 <html lang="en">
     <head>
-        <title>WordleTips</title>
+        <title>WordleCheat</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
         <link rel="stylesheet" href="style.css">
+        <!-- initialize state -->
         <script>
+            // an array of every possible word in a game of wordle
+            // is fetched from a text file in the static folder
             let allWords;
-            let blackHints = [];
+            // grey hints are letters that are not in the target word
+            // yellow hints are letters that are in the target word but in a differet position
+            // green hints are letters that are in the target word in the correct position
+            let greyHints = [];
             let yellowHints = [];
             let greenHints = [];
+            // the id of the current grid box
+            let currentBox = 0;
             fetch('words.txt')
                 .then(response => response.text())
                 .then(data => {
@@ -27,49 +35,265 @@
     </head>
     <body>
         <h1>WordleCheat</h1>
-        <h2 id="hints-header">Enter your grey hints:</h2>
         <div id="hints">
-            <div class="keyboard">
+            <div class="grid">
+                <div class="grid-row">
+                    <button class="grid-box" id="0">0</button>
+                    <button class="grid-box" id="1">0</button>
+                    <button class="grid-box" id="2">0</button>
+                    <button class="grid-box" id="3">0</button>
+                    <button class="grid-box" id="4">0</button>
+                </div>
+                <div class="grid-row">
+                    <button class="grid-box" id="5">0</button>
+                    <button class="grid-box" id="6">0</button>
+                    <button class="grid-box" id="7">0</button>
+                    <button class="grid-box" id="8">0</button>
+                    <button class="grid-box" id="9">0</button>
+                </div>
+                <div class="grid-row">
+                    <button class="grid-box" id="10">0</button>
+                    <button class="grid-box" id="11">0</button>
+                    <button class="grid-box" id="12">0</button>
+                    <button class="grid-box" id="13">0</button>
+                    <button class="grid-box" id="14">0</button>
+                </div>
+                <div class="grid-row">
+                    <button class="grid-box" id="15">0</button>
+                    <button class="grid-box" id="16">0</button>
+                    <button class="grid-box" id="17">0</button>
+                    <button class="grid-box" id="18">0</button>
+                    <button class="grid-box" id="19">0</button>
+                </div>
+                <div class="grid-row">
+                    <button class="grid-box" id="20">0</button>
+                    <button class="grid-box" id="21">0</button>
+                    <button class="grid-box" id="22">0</button>
+                    <button class="grid-box" id="23">0</button>
+                    <button class="grid-box" id="24">0</button>
+                </div>
+            </div>
+            <h2 id="hints-header">Enter your guesses and feedback:</h2>
+            <div class="keyboard" id="keyboard">
                 <div class="keyboard-row" id="row1">
-                    <button class="key">Q</button>
-                    <button class="key">W</button>
-                    <button class="key">E</button>
-                    <button class="key">R</button>
-                    <button class="key">T</button>
-                    <button class="key">Y</button>
-                    <button class="key">U</button>
-                    <button class="key">I</button>
-                    <button class="key">O</button>
-                    <button class="key">P</button>
+                    <button class="key" id="q" onclick="selectKey('q')">Q</button>
+                    <button class="key" id="w" onclick="selectKey('w')">W</button>
+                    <button class="key" id="e" onclick="selectKey('e')">E</button>
+                    <button class="key" id="r" onclick="selectKey('r')">R</button>
+                    <button class="key" id="t" onclick="selectKey('t')">T</button>
+                    <button class="key" id="y" onclick="selectKey('y')">Y</button>
+                    <button class="key" id="u" onclick="selectKey('u')">U</button>
+                    <button class="key" id="i" onclick="selectKey('i')">I</button>
+                    <button class="key" id="o" onclick="selectKey('o')">O</button>
+                    <button class="key" id="p" onclick="selectKey('p')">P</button>
                 </div>
                 <div class="keyboard-row" id="row2">
-                    <button class="key">A</button>
-                    <button class="key">S</button>
-                    <button class="key">D</button>
-                    <button class="key">F</button>
-                    <button class="key">G</button>
-                    <button class="key">H</button>
-                    <button class="key">J</button>
-                    <button class="key">K</button>
-                    <button class="key">L</button>
+                    <button class="key" id="a" onclick="selectKey('a')">A</button>
+                    <button class="key" id="s" onclick="selectKey('s')">S</button>
+                    <button class="key" id="d" onclick="selectKey('d')">D</button>
+                    <button class="key" id="f" onclick="selectKey('f')">F</button>
+                    <button class="key" id="g" onclick="selectKey('g')">G</button>
+                    <button class="key" id="h" onclick="selectKey('h')">H</button>
+                    <button class="key" id="j" onclick="selectKey('j')">J</button>
+                    <button class="key" id="k" onclick="selectKey('k')">K</button>
+                    <button class="key" id="l" onclick="selectKey('l')">L</button>
                 </div>
                 <div class="keyboard-row" id="row3">
-                    <button class="key">Z</button>
-                    <button class="key">X</button>
-                    <button class="key">C</button>
-                    <button class="key">V</button>
-                    <button class="key">B</button>
-                    <button class="key">N</button>
-                    <button class="key">M</button>
+                    <button class="key" id="z" onclick="selectKey('z')">Z</button>
+                    <button class="key" id="x" onclick="selectKey('x')">X</button>
+                    <button class="key" id="c" onclick="selectKey('c')">C</button>
+                    <button class="key" id="v" onclick="selectKey('v')">V</button>
+                    <button class="key" id="b" onclick="selectKey('b')">B</button>
+                    <button class="key" id="n" onclick="selectKey('n')">N</button>
+                    <button class="key" id="m" onclick="selectKey('m')">M</button>
                 </div>
             </div>
-            <div class="restart-submit">
-                <button id="restart">Restart</button>
-                <button id="submit">Submit</button>
+            <div class="feedback" id="feedback">
+                <button id="grey-button" onclick="selectColour('grey')">Grey</button>
+                <button id="yellow-button" onclick="selectColour('yellow')">Yellow</button>
+                <button id="green-button" onclick="selectColour('green')">Green</button>
             </div>
         </div>
-        <div id="results">
-
+        <div class="restart-enter">
+            <button id="restart" onclick="restart()">Restart</button>
+            <button id="submit" onclick="submit()">Submit</button>
+            <button id="add-more" onclick="addMore()">Add more</button>
         </div>
+        <div id="results">
+            <h2 id="results-header"></h2>
+            <div id="results-div">
+                <!-- dummy element is just used as a reference for inserting other elements beneath it -->
+                <p id="dummy-element"></p>
+            </div>
+        </div>
+        <script>
+            function selectKey(key) {
+                var boxID = currentBox.toString();
+                var box = document.getElementById(boxID);
+                box.innerText = key.toUpperCase();
+                box.style.color = "buttontext";
+                box.style.backgroundColor = "buttonface";
+                document.getElementById("keyboard").style.display = "none";
+                document.getElementById("submit").style.display = "none";
+                var feedback = document.getElementById("feedback");
+                feedback.style.display = "flex";
+                feedback.style.justifyContent = "center";
+            }
+
+            function selectColour(colour) {
+                var boxID = currentBox.toString();
+                var box = document.getElementById(boxID);
+                var letter = box.innerText.toLowerCase();
+                if (colour == 'grey') {
+                    box.style.backgroundColor = "dimgrey";
+                    box.style.color = "white";
+                    greyHints.push(letter);
+                }
+                if (colour == 'yellow') {
+                    box.style.backgroundColor = "goldenrod";
+                    box.style.color = "black";
+                    yellowHints[yellowHints.length] = letter;
+                    yellowHints[yellowHints.length] = (parseInt(currentBox) % 5) + 1;
+                }
+                if (colour == 'green') {
+                    box.style.backgroundColor = "seagreen";
+                    box.style.color = "white";
+                    greenHints[greenHints.length] = letter;
+                    greenHints[greenHints.length] = (parseInt(currentBox) % 5) + 1;
+                }
+                document.getElementById("feedback").style.display = "none";
+                var keyboard = document.getElementById("keyboard");
+                keyboard.style.display = "flex";
+                keyboard.style.justifyContent = "center";
+                keyboard.style.flexDirection = "column";
+                keyboard.style.alignItems = "center";
+                document.getElementById("submit").style.display = "inline";
+                currentBox += 1;
+            }
+
+            function restart() {
+                currentBox = 0;
+                greyHints.length = 0;
+                yellowHints.length = 0;
+                greenHints.length = 0;
+                document.getElementById("hints").style.display = "block";
+                document.getElementById("feedback").style.display = "none";
+                var elements = document.querySelectorAll(".result-word");
+                elements.forEach(function(element) {
+                    element.remove();
+                });
+                document.getElementById("results").style.display = "none";
+                var keyboard = document.getElementById("keyboard");
+                keyboard.style.display = "flex";
+                keyboard.style.justifyContent = "center";
+                keyboard.style.flexDirection = "column";
+                keyboard.style.alignItems = "center";
+                document.getElementById("submit").style.display = "inline";
+                document.getElementById("add-more").style.display = "none";
+                for(let i = 0; i < 25; i++) {
+                    var boxID = i.toString();
+                    var box = document.getElementById(boxID);
+                    box.innerText = '0';
+                    box.style.backgroundColor = '#161515';
+                    box.style.color = '#161515'
+                }
+            }
+
+            function submit() {
+                document.getElementById("results").style.display = "block";
+                document.getElementById("results-div").scrollTop = 0;
+                document.getElementById("hints").style.display = "none";
+                document.getElementById("submit").style.display = "none";
+                document.getElementById("add-more").style.display = "inline";
+                var numWords = 0;
+                var elementAbove = document.getElementById("dummy-element");
+                allWords.forEach(function(word) {
+                    if (check_grey(word, greyHints) && check_yellow(word, yellowHints) && check_green(word, greenHints)) {
+                        numWords += 1;
+                        var paragraph = document.createElement("p");
+                        paragraph.innerText = word;
+                        paragraph.className = "result-word";
+                        elementAbove.insertAdjacentElement("afterend", paragraph);
+                        elementAbove = paragraph;
+                    }
+                });
+                var header = document.getElementById("results-header");
+                if (numWords == 1) {
+                    header.innerText = numWords.toString() + " possible word";
+                } else {
+                    header.innerText = numWords.toString() + " possible words";
+                }
+            }
+
+            function addMore() {
+                document.getElementById("hints").style.display = "block";
+                document.getElementById("feedback").style.display = "none";
+                var elements = document.querySelectorAll(".result-word");
+                elements.forEach(function(element) {
+                    element.remove();
+                });
+                document.getElementById("results").style.display = "none";
+                var keyboard = document.getElementById("keyboard");
+                keyboard.style.display = "flex";
+                keyboard.style.justifyContent = "center";
+                keyboard.style.flexDirection = "column";
+                keyboard.style.alignItems = "center";
+                document.getElementById("submit").style.display = "inline";
+                document.getElementById("add-more").style.display = "none";
+            }
+
+            function check_grey(word, hints) {
+                if (hints.length == 0) {
+                    return true;
+                }
+                var chars = word.split("");
+                for(var i = 0; i < chars.length; i++) {
+                    if (hints.includes(chars[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function check_yellow(word, hints) {
+                if (hints.length == 0) {
+                    return true;
+                }
+                var chars = word.split("");
+                count = 0;
+                for(var i = 0; i < hints.length; i++) {
+                    if (i % 2 == 0) {
+                        if (chars.includes(hints[i]) == false) {
+                            return false;
+                        } else {
+                            if (hints[i] != chars[parseInt(hints[i + 1]) - 1]) {
+                                count += 1;
+                            }
+                        }
+                    }
+                }
+                return count == (hints.length / 2);
+            }
+
+            function check_green(word, hints) {
+                if (hints.length == 0) {
+                    return true;
+                }
+                var chars = word.split("");
+                count = 0;
+                for(var i = 0; i < hints.length; i++) {
+                    if (i % 2 == 0) {
+                        if (chars.includes(hints[i]) == false) {
+                            return false;
+                        } else {
+                            if (hints[i] == chars[parseInt(hints[i + 1]) - 1]) {
+                                count += 1;
+                            }
+                        }
+                    }
+                }
+                return count == (hints.length / 2);
+            }
+        </script>
     </body>
 </html>
