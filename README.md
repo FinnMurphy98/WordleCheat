@@ -1,4 +1,4 @@
 # WordleCheat
 Website that gives useful hints/cheats for wordle.
 
-https://git.heroku.com/wordlecheat.git
+https://wordlecheat-b5069e33415b.herokuapp.com/
