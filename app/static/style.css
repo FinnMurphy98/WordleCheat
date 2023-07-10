@@ -60,6 +60,8 @@ h2 {
     border: 1px solid black;
     border-radius: 2px;
     margin: 1px;
+    display: flex;
+    justify-content: center;
 }
 
 #feedback {
@@ -107,6 +109,7 @@ h2 {
     font-size: 1em;
     margin: 3px;
     cursor: pointer;
+    color: black;
 }
 
 #results {
